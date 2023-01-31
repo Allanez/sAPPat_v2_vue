@@ -4,6 +4,7 @@ export default createStore({
     state: {
         isAuthenticated: false,
         role: "",
+        breadcrumbs: [],
     },
 
     mutations: {
@@ -13,16 +14,28 @@ export default createStore({
         setRole(state, role){
             state.role = role
         },
+        setBreadcrumb(state, crumb){
+            state.breadcrumbs.push(crumb)
+        },
+        setCrumbActive(state, name){
+            for(let i=0; i<state.breadcrumbs.length; i++){
+                if(state.breadcrumbs[i].title === name){
+                    state.breadcrumbs[i].disabled = false
+                    break;
+                }
+            }
+        }
     },
 
     actions: {
         async loginUser( {commit}, user ){
             //Temp token
             localStorage.setItem("access_token", "temp_token")
+            localStorage.setItem("user_name", user.username)
             commit('setAuthentication', true)
             //Temp role
             commit('setRole', "Value Chain Data Analyst")
-            window.location.replace("/home/" + user.username)
+            window.location.replace("/home")
 
             
             
@@ -40,6 +53,12 @@ export default createStore({
         },
         getRole: (state) => () => {
             return state.role
+        },
+        getUsername: () => () => {
+
+        },
+        getBreadcrumbs: (state) => () => {
+            return state.breadcrumbs
         }
     }
 })

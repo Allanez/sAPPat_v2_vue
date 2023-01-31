@@ -36,10 +36,24 @@ const router = createRouter({
       component: () => import('../views/FAQView.vue')
     },
     {
-      path: '/home/:username',
+      path: '/home',
       name: 'Home',
-      component: () => import('../views/home/MainView.vue'),
-      props: true,
+      component: () => import('../views/main/MainView.vue'),
+    },
+    {
+      path: '/home/search',
+      name: 'Search',
+      component: () => import('../views/main/SearchView.vue'),
+    },
+    {
+      path: '/home/vcmgt',
+      name: 'ValueChainMgt',
+      component: () => import('../views/main/ValueChainDataMgtView.vue'),
+    },
+    {
+      path: '/home/vcmgt/map',
+      name: 'Map',
+      component: () => import('../views/map/MapView.vue'),
     }
   ]
 })

@@ -31,7 +31,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-container fluid class="main-style">
+      <v-container fluid class="main-style" fill-height>
         <RouterView />
       </v-container>
     </v-main>
@@ -68,12 +68,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css?family=Nunito');
   body{
 		margin: 0;
 		padding: 0;
 		width: 100vw;
 		height: 100vh;
-    font-family: 'Nunito';
+    // font-family: 'Nunito';
 	}
 	#app{
 		width: 100%;
@@ -85,7 +86,7 @@ export default {
 		font-size: 22px;
 	}
   .default-font {
-		font-family: 'Raleway', sans-serif;
+		font-family: 'Nunito';
 	}
 
   .main-style{

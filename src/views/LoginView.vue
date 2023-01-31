@@ -1,12 +1,12 @@
 <template>
-    <v-row class="ma-10" justify="center" color="#ffff00">
-        <v-col cols="12" sm="8" md="6" >
-            <v-card class="px-4 py-10" elevation="3">
-                <v-row>
-                    <v-col>
+    <v-row color="#ffff00">
+        <v-col class="dflex" align-self="center" fill-height >
+            <v-card class="main-style" elevation="3">
+                <v-row justify-self="center">
+                    <v-col cols="6" class="pa-0 logo-style">
                         
                     </v-col>
-                    <v-col>
+                    <v-col cols="6" class="px-10 py-10">
                         <v-row class="mb-2" justify="center">
                             <v-col cols="3">
                                 <h4>Login</h4>
@@ -35,7 +35,7 @@
                             <v-row class="note-text font-italic" no-gutters>
                                 Don't have an account yet? <router-link class="ml-2" to="/register">Register</router-link>
                             </v-row>
-                            <v-btn flat class="text-capitalize" @click="onLogin" width="100%" style="background: #E5E2DA; font-weight: bold;">Login</v-btn>
+                            <v-btn flat class="text-capitalize" @click="onLogin" width="100%" style="background: #E5E2DA; font-weight: bold;">Sign in</v-btn>
                         </v-form>
                         <v-row no-gutters class="text justify-center my-3">Or</v-row>
                         <v-btn class="text-capitalize text-white" color="#3B5998" width="100%" @click="onLoginThroughFB"> Login using Facebook</v-btn>
@@ -80,7 +80,7 @@ export default {
 <style lang="scss" scoped>
     .note-text {
         font-size: 12px;
-        color: #c5c5c5
+        // color: #c5c5c5
     }
     .custom-input {
         position: relative;
@@ -95,5 +95,13 @@ export default {
     }
     .text-right-justify {
         text-align: right;
+    }
+    .logo-style {
+        background-color: #E5E2DA;
+    }
+    .main-style {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>
