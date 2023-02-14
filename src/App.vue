@@ -1,12 +1,12 @@
 <template>
   <v-app class="default-font">
     <v-app-bar
-      class="px-7"
+      class="app-bar-style"
       color="#6C4A3F"
       float
     >
       <v-app-bar-title class="logo font-weight-white">
-        sAPPat
+        <b>sAPPat</b>
       </v-app-bar-title>
       
       <v-spacer/>
@@ -19,14 +19,18 @@
 
       <!-- LOGIN - change if not authenticated -->
       <template v-if="this.$store.getters.isAuthenticated()">
-        <v-btn color="#ffffff" class="text-uppercase" @click="logoutUser">
-          Logout
-        </v-btn>
+        <div class="nav-btn-style">
+          <v-btn color="#ffffff" class="text-uppercase" @click="logoutUser">
+            Logout
+          </v-btn>
+        </div>
       </template>
       <template v-else>
-        <v-btn color="#ffffff" class="text-uppercase" :to="'/login'">
+        <div class="nav-btn-style">
+        <v-btn color="#ffffff" class="text-uppercase nav-btn-style" :to="'/login'">
           Login
         </v-btn>
+      </div>
       </template>
     </v-app-bar>
 
@@ -83,7 +87,7 @@ export default {
   .logo{
 		color: rgba(255, 255, 255, 0.6);
 		letter-spacing: 5px;
-		font-size: 22px;
+		font-size: 1.5em;
 	}
   .default-font {
 		font-family: 'Nunito';
@@ -91,7 +95,14 @@ export default {
 
   .main-style{
     padding-top: 3%;
-    padding-left: 7%;
-    padding-right: 7%;
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+  .app-bar-style{
+    padding-left: 12%;
+    
+  }
+  .nav-btn-style{
+    padding-right: 12%;
   }
 </style>

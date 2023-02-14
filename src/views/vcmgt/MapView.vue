@@ -1,38 +1,5 @@
 <template>
-    <v-breadcrumbs v-if="isReady" :items="items">
-        <template v-slot:divider>
-            <v-icon icon="mdi-chevron-right"></v-icon>
-        </template>
-    </v-breadcrumbs>
-
-    <!-- <v-row no-gutters>
-        <v-col>
-            <l-map
-                class="map-style"
-                ref="map"
-                :zoom="zoom"
-                :center="center"
-                :min-zoom="minZoom"
-                :max-zoom="maxZoom"
-                :max-bounds="maxBounds"
-                :options="{ zoomControl: false }"
-            >
-                <l-tile-layer
-                    v-for="tileProvider in tileProviders"
-                    :key="tileProvider.name"
-                    :name="tileProvider.name"
-                    :visible="tileProvider.visible"
-                    :url="tileProvider.url"
-                    :attribution="tileProvider.attribution"
-                    layer-type="base">
-                ></l-tile-layer>
-                <l-control-zoom :position="'topright'"/>
-                <l-control-layers position="topright"/>
-                <l-control-scale position="bottomleft" :metric="true" :imperial="false"></l-control-scale>
-            </l-map>
-        </v-col>
-    </v-row> -->
-
+    
     <div class="card-style">
         <l-map
             class="map-style"
@@ -44,6 +11,7 @@
             :max-bounds="maxBounds"
             :options="{ zoomControl: false }"
         >
+
             <l-tile-layer
                 v-for="tileProvider in tileProviders"
                 :key="tileProvider.name"
@@ -53,10 +21,51 @@
                 :attribution="tileProvider.attribution"
                 layer-type="base">
             ></l-tile-layer>
+            <l-marker :lat-lng="[11.2, 124.5]"><l-popup>This is a popup</l-popup></l-marker>
+            <l-marker :lat-lng="[13.2, 122.5]"><l-popup>This is a popup</l-popup></l-marker>
+            <l-marker :lat-lng="[10.2, 123.5]"><l-popup>This is a popup</l-popup></l-marker>
+            <l-marker :lat-lng="[9.6, 122.5]"><l-popup>This is a popup</l-popup></l-marker>
+            <l-marker :lat-lng="[15.2, 121.5]"><l-popup>This is a popup</l-popup></l-marker>
+            <l-marker :lat-lng="[12.2, 123.5]"><l-popup>This is a popup</l-popup></l-marker>
+            <l-marker :lat-lng="[12.2, 124.5]"><l-popup>This is a popup</l-popup></l-marker>
+            <l-marker :lat-lng="[11.2, 122.5]"><l-popup>This is a popup</l-popup></l-marker>
+            <l-marker :lat-lng="[9.2, 123.5]"><l-popup>This is a popup</l-popup></l-marker>
+            <l-marker :lat-lng="[13.9, 121.5]"><l-popup>This is a popup</l-popup></l-marker>
+            <l-marker :lat-lng="[11.5, 123.5]"><l-popup>This is a popup</l-popup></l-marker>
+            
             <l-control-zoom :position="'topright'"/>
             <l-control-layers position="topright"/>
             <l-control-scale position="bottomleft" :metric="true" :imperial="false"></l-control-scale>
         </l-map>
+        <v-card class="nav-window-style" flat>
+            <v-row>
+                <v-col class="pb-0">
+                    <v-icon @click="showNav=!showNav" style="color: white;">mdi-menu</v-icon>
+                </v-col>
+            </v-row>
+            <v-row v-show="showNav" >
+                <v-col class="pt-1">
+                    <v-card class="pa-2" flat>
+                        <b>Select Type</b>
+                        <v-select
+                            :items="typeItems"
+                            density="compact"
+                            variant="outlined"
+                            v-model="selectedType"
+                            @input="selectItem"
+                        ></v-select>
+
+                        <b>Select Product</b>
+                        <v-select
+                            :items="productItems"
+                            density="compact"
+                            variant="outlined"
+                            v-model="selectedProduct"
+                        ></v-select>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-card>
     </div>
 </template>
   
@@ -66,6 +75,7 @@ import { LMap, LTileLayer, LMarker, LPopup, LControlZoom, LControlLayers, LCircl
 
 
 export default {
+    
     components: {
         LMap,
         LTileLayer,
@@ -81,6 +91,7 @@ export default {
     },
     data() {
         return {
+            showNav: false,
             isReady: false,
             zoom: 6,
             center: [12.8797, 121.7740],
@@ -136,7 +147,61 @@ export default {
             ],
 
             items: [],
-        };
+            select: 'All',
+            typeItems: [
+                'Agricultural Sector',
+                'Fishing Sector',
+                'Livestock',
+                'All'
+            ],
+            productItems: [
+                
+            ],
+
+            fishProd: [
+                'Bangus',
+                'Crab',
+                'Eel'
+            ],
+
+            agriProd: [
+                'Rice',
+                'Vegetable',
+                'Root Crops'
+            ],
+
+            livestockProd: [
+                'Pig',
+                'Chicken',
+                'Cow'
+            ],
+
+            selectedProduct: null,
+            selectedType: null,
+            
+        }
+    },
+    watch:{
+        selectedType: function(value){
+            
+            if(value === 'All'){
+                for (let i = 0; i<3; i++){
+                    this.productItems.push(this.fishProd[i])
+                    this.productItems.push(this.agriProd[i])
+                    this.productItems.push(this.livestockProd[i])
+                }
+            }
+            if(value === 'Agricultural Sector'){
+                this.productItems = this.agriProd
+            }
+            if(value === 'Fishing Sector'){
+                this.productItems = this.fishProd
+            }
+            if(value === 'Livestock'){
+                this.productItems = this.livestockProd
+            }
+            this.productItems.push('All')
+        }
     },
     mounted(){
         this.getData()
@@ -149,22 +214,39 @@ export default {
             }
             this.isReady = true
         },
+        selectItem(item){
+            console.log("jere")
+            console.log(item)
+        }
     }
 }
 
 </script>
 
-<style>
+<style lang="scss" scoped>
 .card-style{
     margin: auto;
-    width: 80vw;
+    width: 100%;
     height: 100%;
-    
 }
 .map-style{
     z-index: 0;
     position: absolute;
-    max-width: 80vw;
+    max-width: 70vw;
     max-height: 82vh;
+}
+.nav-window-style{
+    z-index: 4;
+    position: relative;
+    top: 5px;
+    left: 5px;
+    padding: 10px;
+    width: 25vh;
+    background-color: transparent;
+}
+
+.navcard{
+    width: 30vh;
+    
 }
 </style>

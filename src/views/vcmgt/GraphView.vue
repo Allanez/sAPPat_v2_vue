@@ -20,12 +20,11 @@ export default {
     emits: ["selected", "activeView"],
     data(){
         return {
-            viewName: "Value Chain Data Management",
+            viewName: "Graph",
             isReady: false,
             buttons: [
-                {id: 0, name: "Data Entry", icon: "mdi-database-plus-outline", link: "/data/entry", route: "DataEntry"},
-                {id: 0, name: "Graph", icon: "mdi-graph", link: "/graph", route: "Graph"},
-                {id: 1, name: "Map", icon: "mdi-map", link: "/map", route: "Map"}
+                {id: 0, name: "VC Player", icon: "mdi-account-tie", link: "/graph/vcplayer", route: "GraphVCP"},
+                {id: 0, name: "Products", icon: "mdi-fish", link: "/graph/products", route: "GraphProducts"},
             ],
             items: [],
         }

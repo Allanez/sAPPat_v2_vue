@@ -20,12 +20,12 @@ export default {
     emits: ["selected", "activeView"],
     data(){
         return {
-            viewName: "Value Chain Data Management",
+            viewName: "Account Settings",
             isReady: false,
             buttons: [
-                {id: 0, name: "Data Entry", icon: "mdi-database-plus-outline", link: "/data/entry", route: "DataEntry"},
-                {id: 0, name: "Graph", icon: "mdi-graph", link: "/graph", route: "Graph"},
-                {id: 1, name: "Map", icon: "mdi-map", link: "/map", route: "Map"}
+                {id: 0, name: "Personal Profile", icon: "mdi-account-outline", link: "/profile", route: "Profile"},
+                {id: 1, name: "Activate / Deactivate Account", icon: "mdi-account-off-outline", link: "/status", route: "ADAccount"},
+                {id: 2, name: "Change Role Permissions", icon: "mdi-account-wrench-outline", link: "/manage", route: "ManageAccount"}
             ],
             items: [],
         }
