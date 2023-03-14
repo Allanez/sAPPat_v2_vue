@@ -45,7 +45,7 @@
             </v-row>
             <v-row v-show="showNav" >
                 <v-col class="pt-1">
-                    <v-card class="pa-2" flat>
+                    <v-card class="pa-5" flat>
                         <b>Select Type</b>
                         <v-select
                             :items="typeItems"
@@ -241,7 +241,7 @@ export default {
     top: 5px;
     left: 5px;
     padding: 10px;
-    width: 25vh;
+    width: 35vh;
     background-color: transparent;
 }
 

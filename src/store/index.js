@@ -1,4 +1,5 @@
 import { createStore } from "vuex"
+import { login } from '@/router/api/userRoutes.js'
 
 export default createStore({
     state: {
@@ -29,13 +30,22 @@ export default createStore({
 
     actions: {
         async loginUser( {commit}, user ){
-            //Temp token
-            localStorage.setItem("access_token", "temp_token")
-            localStorage.setItem("user_name", user.username)
-            commit('setAuthentication', true)
-            //Temp role
-            commit('setRole', "Value Chain Data Analyst")
-            window.location.replace("/home")
+
+            var res = await login(user)
+            // console.log(res)
+
+            if (res.status == 'success'){
+                //Temp token
+                localStorage.setItem("access_token", "temp_token")
+                localStorage.setItem("user_name", user.username)
+                commit('setAuthentication', true)
+                //Temp role
+                commit('setRole', "Value Chain Data Analyst")
+                window.location.replace("/home")
+            }
+            else {
+                return res.message
+            }
 
             
             

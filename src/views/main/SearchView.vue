@@ -7,43 +7,21 @@
         </v-row>
         <br/><br/>
         <v-row class="pt-5 select-style">
-            <v-col cols="3">
-                <v-select
-                    :items="sectorItems"
-                    label="Sector"
-                    density="compact"
-                    variant="outlined"
-                    v-model="selectedSector"
-                ></v-select>
-            </v-col>
-            <v-col cols="3">
-                <v-select
-                    :items="locationItems"
-                    label="Location"
-                    density="compact"
-                    variant="outlined"
-                    v-model="selectedLocation"
-                ></v-select>
-            </v-col>
-            <v-col cols="3">
-                <v-select
-                    :items="productItems"
-                    label="Products"
-                    density="compact"
-                    variant="outlined"
-                    v-model="selectedProduct"
-                ></v-select>
-            </v-col>
-            <v-col cols="3">
-                <v-select
-                    :items="vcplayerItems"
-                    label="VC Player"
-                    density="compact"
-                    variant="outlined"
-                    v-model="selectedVCP"
-                ></v-select>
-            </v-col>
+            <v-btn-toggle
+                v-model="toggle"
+                multiple
+            >   
+                <v-col
+                    class="d-flex align-center justify-center"
+                    v-for="filter in filters"
+                    cols="3"
+                >
+                    <v-btn class="btn-style" :value="filter.col_name" variant="outlined">{{ filter.name }}</v-btn>
+
+                </v-col>
+            </v-btn-toggle>
         </v-row>
+        <br/><br/>
         <v-row>
             <v-text-field
                 hide-details="auto"
@@ -75,6 +53,14 @@ export default {
             productItems: [],
             vcplayerItems: [],
 
+            filters: [
+                {id: 0, name: 'Sector', enabled: false, col_name: 'sector'},
+                {id: 1, name: 'Location', enabled: false, col_name: 'location'},
+                {id: 2, name: 'Products', enabled: false, col_name: 'products'},
+                {id: 3, name: 'VC Player', enabled: false, col_name: 'vcplayer'}
+            ],
+
+            toggle: [],
         }
     },
     mounted(){
@@ -95,6 +81,11 @@ export default {
 
         activeView(){
             this.$emit('activeView', this.viewName)
+        },
+
+        onClick(id){
+            console.log(id)
+            this.filters[id].enabled = !this.filters[id].enabled
         }
     }
 }
@@ -124,8 +115,12 @@ export default {
         padding-right: 5%;
     }
     .select-style{
-        padding-left: 10%;
-        padding-right: 10%;
+        justify-content: center;
+    }
+    .btn-style{
+        padding-top: 5%;
+        padding-bottom: 5%;
+        width: 100%;
     }
     .title-style{
         font-weight: bold;

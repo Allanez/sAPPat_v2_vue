@@ -21,7 +21,7 @@
                                     />
                                     Upload image
                                 </button>
-                                <button class="button" @click="cropImage()">Crop image</button>
+                                <button v-show="!(image.src===null)" class="button" @click="cropImage()">Crop image</button>
                             </div>
                         </v-card>
                     </v-dialog>
@@ -79,7 +79,7 @@ export default {
             image: {
                 // src:
                 // "https://images.unsplash.com/photo-1619737307100-55b82496fcda?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-                src: "",
+                src: null,
                 type: "image/jpg",
             },
         }
