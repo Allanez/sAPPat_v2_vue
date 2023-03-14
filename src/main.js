@@ -1,14 +1,19 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-
-import './assets/main.css'
+import store from './store'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import '@mdi/font/css/materialdesignicons.css'
+import '@/assets/scss/style.scss'
 
 // Vuetify
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+
+import VueCropper from 'vue-cropper'; 
+import 'vue-cropper/dist/index.css'
 
 const vuetify = createVuetify({
     components,
@@ -18,5 +23,7 @@ const vuetify = createVuetify({
 const app = createApp(App)
 
 app.use(router)
-app.use(vuetify)
+.use(vuetify)
+.use(store)
+.use(VueCropper)
 app.mount('#app')

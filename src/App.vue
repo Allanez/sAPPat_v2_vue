@@ -1,85 +1,108 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <v-app class="default-font">
+    <v-app-bar
+      class="app-bar-style"
+      color="#6C4A3F"
+      float
+    >
+      <v-app-bar-title class="logo font-weight-white">
+        <b>sAPPat</b>
+      </v-app-bar-title>
+      
+      <v-spacer/>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <template v-for="tab in tabs">
+        <v-btn color="#ffffff" class="text-uppercase" :to="tab.route">
+          {{ tab.name }}
+        </v-btn>
+      </template>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+      <!-- LOGIN - change if not authenticated -->
+      <template v-if="this.$store.getters.isAuthenticated()">
+        <div class="nav-btn-style">
+          <v-btn color="#ffffff" class="text-uppercase" @click="logoutUser">
+            Logout
+          </v-btn>
+        </div>
+      </template>
+      <template v-else>
+        <div class="nav-btn-style">
+        <v-btn color="#ffffff" class="text-uppercase nav-btn-style" :to="'/login'">
+          Login
+        </v-btn>
+      </div>
+      </template>
+    </v-app-bar>
 
-  <RouterView />
+    <v-main>
+      <v-container fluid class="main-style" fill-height>
+        <RouterView />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+<script>
+import { RouterLink, RouterView } from 'vue-router'
+export default {
+  data(){
+    return {
+      tabs: [
+        {name: "About", route: "/about"},
+        {name: "Contact", route: "/contact"},
+        {name: "FAQ", route: "/faq"},
+      ],
+    }
+  },
+  methods: {
+    logoutUser(){
+      this.$store.dispatch("logoutUser")
+    }
+  },
+  mounted: function() {
+		let elHtml = document.getElementsByTagName('html')[0]
+		elHtml.style.overflowY = 'auto'
+	},
+	destroyed: function() {
+		let elHtml = document.getElementsByTagName('html')[0]
+		elHtml.style.overflowY = null
+	},
 }
+</script>
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
+<style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+  body{
+		margin: 0;
+		padding: 0;
+		width: 100vw;
+		height: 100vh;
+    // font-family: 'Nunito';
+	}
+	#app{
+		width: 100%;
+		height: 100%;
+	}
+  .logo{
+		color: rgba(255, 255, 255, 0.6);
+		letter-spacing: 5px;
+		font-size: 1.5em;
+	}
+  .default-font {
+		font-family: 'Nunito';
+	}
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  .main-style{
+    padding-top: 3%;
+    padding-left: 15%;
+    padding-right: 15%;
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
+  .app-bar-style{
+    padding-left: 12%;
+    
   }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  .nav-btn-style{
+    padding-right: 12%;
   }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
